@@ -12,7 +12,7 @@ export default class CreateCategories1588623700495
             type: 'uuid',
             isPrimary: true, // chave primaria
             generationStrategy: 'uuid',
-            default: 'uuid_generere_v4()', // valor padrao p a tabela
+            default: 'uuid_generate_v4()', // valor padrao p a tabela
           },
           {
             name: 'title',
@@ -24,7 +24,7 @@ export default class CreateCategories1588623700495
             default: 'now()',
           },
           {
-            name: 'update_at',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
