@@ -1,10 +1,11 @@
 // import AppError from '../errors/AppError';
 
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
 
 import TransactionsRepository from '../repositories/TransactionsRepository'; // Repository: tratamento de tados - interface de conexao com o BD, importando repository
 
 import Transaction from '../models/Transaction';
+import Category from '../models/Category';
 
 interface Request {
   title: string;
@@ -22,10 +23,27 @@ class CreateTransactionService {
   }: Request): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository); // instanciando uma class do typeorm
 
+    const categoryRepository = getRepository(Category);
+    // uso let p caso n achar vai subescrever a categora
+    let transactionCategory = await categoryRepository.findOne({
+      where: {
+        title: category,
+      },
+    });
+
+    if (!transactionCategory) {
+      transactionCategory = categoryRepository.create({
+        title: category,
+      });
+
+      await categoryRepository.save(transactionCategory);
+    }
+
     const transaction = transactionsRepository.create({
       title,
       value,
       type,
+      category: transactionCategory,
     });
 
     await transactionsRepository.save(transaction); // p salvar o q foi criado

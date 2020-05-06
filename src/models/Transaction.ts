@@ -29,6 +29,9 @@ class Transaction {
 
   @ManyToOne(() => Category) // passa um parametro chamando o model(pasta) da coluna q faz referencia
   @JoinColumn({ name: 'category_id' }) // p saber qual pe a coluna q esta sendo utilizada p fazer o relacionamento
+  category: Category;
+
+  @Column()
   category_id: string;
 
   @CreateDateColumn()
