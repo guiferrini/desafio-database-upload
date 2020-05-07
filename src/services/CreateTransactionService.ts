@@ -25,11 +25,14 @@ class CreateTransactionService {
 
     const { total } = await transactionsRepository.getBalance();
 
+    // Validar se tem saldo p executar outcome
     if (type === 'outcome' && total < value) {
       throw new AppError('You do not have enough balance');
     }
 
+    // com let p depois caso n exista poder sobrepor a nova categoria
     let transactionCategory = await categoryRepository.findOne({
+      // findOne com 'where' pq são 4 elementos p buscar
       where: {
         title: category,
       },
