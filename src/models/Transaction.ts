@@ -27,7 +27,7 @@ class Transaction {
   @Column('decimal')
   value: number;
 
-  @ManyToOne(() => Category) // passa um parametro chamando o model(pasta) da coluna q faz referencia
+  @ManyToOne(() => Category, category => category.transaction, { eager: true }) // passa um parametro chamando o model(pasta) da coluna q faz referencia
   @JoinColumn({ name: 'category_id' }) // p saber qual pe a coluna q esta sendo utilizada p fazer o relacionamento
   category: Category;
 
